@@ -1,0 +1,11 @@
+pandas
+numpy
+scikit-learn
+fastapi
+uvicorn
+qdrant-client
+pinecone-client
+pyarrow
+tensorflow-reccomendations
+tensorflow
+
