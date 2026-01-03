@@ -19,7 +19,7 @@ def get_dataset_from_chunks(chunk_dir):
 
 def run_training():
     print("Building vocabularies...")
-    user_ids, item_ids, _ = build_vocabs('data/processed/gold_training_set')
+    user_ids, item_ids, _ = build_vocab('data/processed/gold_training_set')
 
     model = AmazonModel(user_ids, item_ids)
     model.compile(optimizer=tf.keras.optimizers.Adagrad(learning_rate=0.1))
@@ -30,11 +30,13 @@ def run_training():
         chunk_gen = get_dataset_from_chunks('data/processed/gold_training_set')
         
         for i, chunk_ds in enumerate(chunk_gen):
-            cached_ds = chunk_ds.batch(4096).cache()
+            cached_ds = chunk_ds.batch(16384).cache()
             
             print(f"Training on Gold Chunk {i}...")
             model.fit(cached_ds, epochs=1, verbose=1)
-    model.save_weights('src/models/weights/two_tower_v1')
+            if i % 50 == 0:
+                model.save_weights(f'src/models/weights/checkpoint_chunk_{i}.weights.h5')
+    model.save_weights('src/models/weights/two_tower_v1.weights.h5')
     print("Model weights saved successfully!")
 
 if __name__ == "__main__":
