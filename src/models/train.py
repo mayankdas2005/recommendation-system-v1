@@ -22,6 +22,12 @@ def run_training():
     user_ids, item_ids, _ = build_vocab('data/processed/gold_training_set')
 
     model = AmazonModel(user_ids, item_ids)
+    dummy_input = {
+        "user_id": tf.constant([user_ids[0]], dtype=tf.string),
+        "parent_asin": tf.constant([item_ids[0]], dtype=tf.string)
+    }
+    # Calling the model once builds all the internal weights
+    _ = model(dummy_input)
     model.compile(optimizer=tf.keras.optimizers.Adagrad(learning_rate=0.1))
 
     for epoch in range(3): 
@@ -30,12 +36,13 @@ def run_training():
         chunk_gen = get_dataset_from_chunks('data/processed/gold_training_set')
         
         for i, chunk_ds in enumerate(chunk_gen):
-            cached_ds = chunk_ds.batch(16384).cache()
+            cached_ds = chunk_ds.batch(4096).cache()
             
             print(f"Training on Gold Chunk {i}...")
             model.fit(cached_ds, epochs=1, verbose=1)
             if i % 50 == 0:
-                model.save_weights(f'src/models/weights/checkpoint_chunk_{i}.weights.h5')
+                model.save_weights(f'src/models/weights/checkpoint_{i}.weights.h5')
+
     model.save_weights('src/models/weights/two_tower_v1.weights.h5')
     print("Model weights saved successfully!")
 
