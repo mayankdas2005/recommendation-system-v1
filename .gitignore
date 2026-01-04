@@ -5,3 +5,5 @@ __pycache__/
 .DS_Store
 *.log
 .env
+scr/models/weights/
+notebooks/02_eda.ipynb
