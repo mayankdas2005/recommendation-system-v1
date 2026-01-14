@@ -9,7 +9,7 @@ This is a recommender system project structure.
 - `src/`: Source code
   - `data_pipeline/`: Data cleaning and transformation
   - `models/`: Models (Two-Tower, Ranking)
-  - `retrieval/`: Vector DB logic
   - `api/`: FastAPI implementation
 - `scripts/`: Training and evals
-- `tests/`: Unit tests
+
+
