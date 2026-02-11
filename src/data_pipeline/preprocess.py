@@ -10,7 +10,7 @@ def transform_chunk(df):
     """
     #Price Log Transformation
     if 'price' in df.columns:
-        # We fill NaNs with the median price of the dataset (calculated during EDA)
+        
         df['price'] = df['price'].fillna(df['price'].median())
         df['log_price'] = np.log1p(df['price'])
 
