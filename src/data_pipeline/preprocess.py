@@ -14,11 +14,11 @@ def transform_chunk(df):
         df['price'] = df['price'].fillna(df['price'].median())
         df['log_price'] = np.log1p(df['price'])
 
-    # Category Cleaning
+    #Category Cleaning
     if 'main_category' in df.columns:
         df['main_category'] = df['main_category'].fillna('Unknown')
         
-    # Handle Rating Number
+    #Handle Rating Number
     if 'rating_number' in df.columns:
         df['rating_number'] = df['rating_number'].fillna(0)
 
