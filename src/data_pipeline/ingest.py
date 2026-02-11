@@ -32,7 +32,7 @@ def process_and_save(chunk, count, output_dir):
     cols_to_keep = ['parent_asin', 'main_category', 'title', 'average_rating', 'rating_number', 'price']
     df = df[[c for c in cols_to_keep if c in df.columns]]
 
-    # Convert price to numeric, turning errors (like '—') into NaN
+    
     if 'price' in df.columns:
         df['price'] = pd.to_numeric(df['price'], errors='coerce')
 
